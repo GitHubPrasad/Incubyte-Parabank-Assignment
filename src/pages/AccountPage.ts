@@ -44,6 +44,11 @@ export class AccountPage {
   }
 
   async isLoggedIn(): Promise<boolean> {
-    return await this.welcomeMessage.isVisible();
+    // Wait for page to load after login
+    await this.page.waitForLoadState("networkidle");
+    console.log(`Current URL: ${this.page.url()}`);
+
+    // Check URL contains 'overview' instead of checking element
+    return this.page.url().includes("overview");
   }
 }

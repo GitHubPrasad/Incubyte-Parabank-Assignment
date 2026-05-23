@@ -30,7 +30,7 @@ export class RegisterPage {
     this.passwordInput = page.locator('[id="customer.password"]');
     this.confirmPasswordInput = page.locator("#repeatedPassword");
     this.registerButton = page.getByRole("button", { name: "Register" });
-    this.registrationSuccessMessage = page.locator("h1.title");
+    this.registrationSuccessMessage = page.locator("#rightPanel p");
   }
 
   async fillRegistrationForm(userData: {
