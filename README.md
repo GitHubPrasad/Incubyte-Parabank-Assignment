@@ -79,3 +79,8 @@ npm run test:report
 - **Page Object Model:** Each page has its own class with locators and actions
 - **BDD:** Feature files written in Gherkin for business readability
 - **Central Config:** Base URL managed in `src/config.ts`
+
+## License
+
+This project is created for assessment purposes only.
+© 2026 Prasad Patil. All rights reserved.
