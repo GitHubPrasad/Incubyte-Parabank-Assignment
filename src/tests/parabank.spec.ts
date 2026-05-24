@@ -2,22 +2,11 @@ import { test, expect, Browser, Page } from "@playwright/test";
 import { HomePage } from "../pages/HomePage";
 import { RegisterPage } from "../pages/RegisterPage";
 import { AccountPage } from "../pages/AccountPage";
+import { TestDataHelper } from "../helpers/TestDataHelper";
 
 // Shared username across all tests in this file
-const timestamp = Date.now();
-const testUser = {
-  firstName: "Prasad",
-  lastName: "Patil",
-  address: "123 Test Street",
-  city: "Pune",
-  state: "Maharashtra",
-  zipCode: "411001",
-  phone: "9876543210",
-  ssn: "123456789",
-  username: `prasad_${timestamp}`,
-  password: "Test@1234",
-  confirmPassword: "Test@1234",
-};
+
+const testUser = TestDataHelper.generateUser();
 
 test.describe("Parabank User Flows", () => {
   // This runs before ALL tests - registers the user once
@@ -46,7 +35,7 @@ test.describe("Parabank User Flows", () => {
 
     await registerPage.fillRegistrationForm({
       ...testUser,
-      username: `prasad2_${timestamp}`, // slightly different username
+      username: `${testUser.username}_2`, // slightly different from main testUser
     });
 
     await registerPage.submitRegistration();
