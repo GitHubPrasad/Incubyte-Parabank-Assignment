@@ -12,7 +12,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
 
   // No retries for now
-  retries: 0,
+  retries: config.retries,
 
   // One worker = one browser at a time
   workers: 1,
