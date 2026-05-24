@@ -1,4 +1,5 @@
 import { Page, Locator } from "@playwright/test";
+import { config } from "../config";
 
 export class HomePage {
   readonly page: Page;
@@ -16,7 +17,7 @@ export class HomePage {
   }
 
   async navigate() {
-    await this.page.goto("/parabank/index.htm");
+    await this.page.goto(config.baseURL + config.paths.home);
   }
 
   async login(username: string, password: string) {
