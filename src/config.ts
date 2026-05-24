@@ -8,6 +8,7 @@ export const config = {
   browser: process.env.BROWSER || "chromium",
   headless: process.env.HEADLESS === "true",
   timeout: parseInt(process.env.TIMEOUT || "30000"),
+  retries: parseInt(process.env.RETRIES || "1"),
   paths: {
     home: "/parabank/index.htm",
     register: "/parabank/register.htm",
