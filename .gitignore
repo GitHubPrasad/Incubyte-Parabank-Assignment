@@ -152,3 +152,8 @@ vite.config.ts.timestamp-*
 # Playwright generated reports
 reports/html-report/
 test-results/
+
+# Generated reports
+reports/cucumber-report.html
+reports/html-report/
+test-results/
