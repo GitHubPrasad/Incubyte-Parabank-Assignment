@@ -16,6 +16,7 @@ import {
 import { HomePage } from "../../pages/HomePage";
 import { RegisterPage } from "../../pages/RegisterPage";
 import { AccountPage } from "../../pages/AccountPage";
+import { TestDataHelper } from "../../helpers/TestDataHelper";
 
 // Set timeout for all steps
 setDefaultTimeout(60 * 1000);
@@ -28,21 +29,23 @@ let homePage: HomePage;
 let registerPage: RegisterPage;
 let accountPage: AccountPage;
 
-// Unique user for each test run
-const timestamp = Date.now();
-const testUser = {
-  firstName: "Prasad",
-  lastName: "Patil",
-  address: "123 Test Street",
-  city: "Pune",
-  state: "Maharashtra",
-  zipCode: "411001",
-  phone: "9876543210",
-  ssn: "123456789",
-  username: `prasad_${timestamp}`,
-  password: "Test@1234",
-  confirmPassword: "Test@1234",
-};
+// // Unique user for each test run
+// const timestamp = Date.now();
+// const testUser = {
+//   firstName: "Prasad",
+//   lastName: "Patil",
+//   address: "123 Test Street",
+//   city: "Pune",
+//   state: "Maharashtra",
+//   zipCode: "411001",
+//   phone: "9876543210",
+//   ssn: "123456789",
+//   username: `prasad_${timestamp}`,
+//   password: "Test@1234",
+//   confirmPassword: "Test@1234",
+// };
+
+const testUser = TestDataHelper.generateUser();
 
 // Runs before each scenario
 Before(async () => {
