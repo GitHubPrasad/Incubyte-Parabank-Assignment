@@ -157,3 +157,6 @@ test-results/
 reports/cucumber-report.html
 reports/html-report/
 test-results/
+
+# Environment variables
+.env

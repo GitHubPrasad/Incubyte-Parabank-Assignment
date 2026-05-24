@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { config } from "./src/config";
 
 export default defineConfig({
   // Tell Playwright where our test files live
@@ -23,23 +24,12 @@ export default defineConfig({
   ],
 
   use: {
-    // Base URL of our application
-    baseURL: "https://parabank.parasoft.com",
-
-    // Save screenshots on failure automatically
+    baseURL: config.baseURL,
     screenshot: "only-on-failure",
-
-    // Save videos on failure
     video: "retain-on-failure",
-
-    // See the browser while tests run (false = headless/invisible)
-    headless: false,
-
-    // Each action timeout
-    actionTimeout: 15000,
-
-    // Navigation timeout
-    navigationTimeout: 30000,
+    headless: config.headless,
+    actionTimeout: config.timeout / 2,
+    navigationTimeout: config.timeout,
   },
 
   projects: [
