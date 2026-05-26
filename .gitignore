@@ -160,3 +160,5 @@ test-results/
 
 # Environment variables
 .env
+
+reports/logs/

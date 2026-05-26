@@ -3,6 +3,7 @@ import { HomePage } from "../pages/HomePage";
 import { RegisterPage } from "../pages/RegisterPage";
 import { AccountPage } from "../pages/AccountPage";
 import { TestDataHelper } from "../helpers/TestDataHelper";
+import { logger } from "../helpers/Logger";
 
 // Shared username across all tests in this file
 
@@ -43,7 +44,7 @@ test.describe("Parabank User Flows", () => {
     // Verify success - check for welcome text after registration
     await expect(page.locator("h1.title")).toBeVisible();
     const heading = await page.locator("h1.title").innerText();
-    console.log(`Registration heading: ${heading}`);
+    logger.info(`Registration heading: ${heading}`);
     expect(heading).toBeTruthy();
   });
 
@@ -81,6 +82,6 @@ test.describe("Parabank User Flows", () => {
     expect(balance).toBeTruthy();
     expect(totalBalance).toBeTruthy();
 
-    console.log(`✅ Balance: ${balance} | Total: ${totalBalance}`);
+    logger.info(`✅ Balance: ${balance} | Total: ${totalBalance}`);
   });
 });

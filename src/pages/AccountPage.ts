@@ -1,4 +1,5 @@
 import { Page, Locator } from "@playwright/test";
+import { logger } from "../helpers/Logger";
 
 export class AccountPage {
   readonly page: Page;
@@ -28,14 +29,14 @@ export class AccountPage {
   async getAccountBalance(): Promise<string> {
     await this.accountBalance.waitFor({ state: "visible" });
     const balance = await this.accountBalance.innerText();
-    console.log(`💰 Account Balance displayed on page: ${balance}`);
+    logger.info(`💰 Account Balance displayed on page: ${balance}`);
     return balance;
   }
 
   async getTotalBalance(): Promise<string> {
     await this.totalBalance.waitFor({ state: "visible" });
     const total = await this.totalBalance.innerText();
-    console.log(`💰 Total Balance displayed on page: ${total}`);
+    logger.info(`💰 Total Balance displayed on page: ${total}`);
     return total;
   }
 
