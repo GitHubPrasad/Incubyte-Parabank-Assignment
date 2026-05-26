@@ -17,7 +17,7 @@ import { HomePage } from "../../pages/HomePage";
 import { RegisterPage } from "../../pages/RegisterPage";
 import { AccountPage } from "../../pages/AccountPage";
 import { TestDataHelper } from "../../helpers/TestDataHelper";
-
+import { logger } from "../../helpers/Logger";
 // Set timeout for all steps
 setDefaultTimeout(60 * 1000);
 
@@ -83,7 +83,7 @@ When("I click the Register button", async () => {
 
 Then("I should see a successful registration message", async () => {
   const heading = await page.locator("h1.title").innerText();
-  console.log(`Registration message: ${heading}`);
+  logger.info(`Registration message: ${heading}`);
   expect(heading).toBeTruthy();
 });
 
@@ -94,13 +94,13 @@ When("I login with valid username and password", async () => {
 Then("I should be redirected to the account overview page", async () => {
   await page.waitForLoadState("networkidle");
   const currentURL = page.url();
-  console.log(`Current URL: ${currentURL}`);
+  logger.info(`Current URL: ${currentURL}`);
   expect(currentURL).toContain("overview");
 });
 
 Then("I should see the welcome message", async () => {
   const url = page.url();
-  console.log(`Current page after login: ${url}`);
+  logger.info(`Current page after login: ${url}`);
   expect(url).toContain("overview");
 });
 
@@ -111,6 +111,6 @@ Then("the account balance should be displayed on the page", async () => {
 
 Then("the balance amount should be logged to the console", async () => {
   const total = await accountPage.getTotalBalance();
-  console.log(`💰 Final Balance logged: ${total}`);
+  logger.info(`💰 Final Balance logged: ${total}`);
   expect(total).toBeTruthy();
 });
