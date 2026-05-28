@@ -29,27 +29,12 @@ let homePage: HomePage;
 let registerPage: RegisterPage;
 let accountPage: AccountPage;
 
-// // Unique user for each test run
-// const timestamp = Date.now();
-// const testUser = {
-//   firstName: "Prasad",
-//   lastName: "Patil",
-//   address: "123 Test Street",
-//   city: "Pune",
-//   state: "Maharashtra",
-//   zipCode: "411001",
-//   phone: "9876543210",
-//   ssn: "123456789",
-//   username: `prasad_${timestamp}`,
-//   password: "Test@1234",
-//   confirmPassword: "Test@1234",
-// };
-
 const testUser = TestDataHelper.generateUser();
 
 // Runs before each scenario
 Before(async () => {
-  browser = await chromium.launch({ headless: false });
+  const isCI = process.env.CI === "true";
+  browser = await chromium.launch({ headless: isCI ? true : false });
   context = await browser.newContext();
   page = await context.newPage();
   homePage = new HomePage(page);
@@ -59,8 +44,12 @@ Before(async () => {
 
 // Runs after each scenario
 After(async () => {
-  await context.close();
-  await browser.close();
+  try {
+    if (context) await context.close();
+    if (browser) await browser.close();
+  } catch (error) {
+    logger.error(`Error closing browser: ${error}`);
+  }
 });
 
 // =================== STEP DEFINITIONS ===================
