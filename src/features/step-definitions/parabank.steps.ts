@@ -103,3 +103,36 @@ Then("the balance amount should be logged to the console", async () => {
   logger.info(`💰 Final Balance logged: ${total}`);
   expect(total).toBeTruthy();
 });
+
+When("I fill the form with mismatched passwords", async () => {
+  const testUser = TestDataHelper.generateUser();
+  await registerPage.fillRegistrationForm({
+    ...testUser,
+    confirmPassword: "DifferentPass@999",
+  });
+  await registerPage.submitRegistration();
+  await page.waitForLoadState("networkidle");
+});
+
+Then("I should see a password mismatch error message", async () => {
+  const errorSpans = page.locator("span.error");
+  const errorCount = await errorSpans.count();
+  const errorText = errorCount > 0 ? await errorSpans.first().innerText() : "";
+  logger.info(`Password mismatch error: ${errorText}`);
+  expect(errorCount).toBeGreaterThan(0);
+  logger.info("TC04 - Password mismatch validation working ✅");
+});
+
+When("I click the Register button without filling the form", async () => {
+  await page.getByRole("button", { name: "Register" }).click();
+  await page.waitForLoadState("networkidle");
+});
+
+Then("I should see validation error messages", async () => {
+  const errorSpans = page.locator("span.error");
+  const errorCount = await errorSpans.count();
+  logger.info(`Validation errors shown: ${errorCount}`);
+  console.log(`Number of validation errors: ${errorCount}`);
+  expect(errorCount).toBeGreaterThan(0);
+  logger.info("TC05 - Empty form validation working correctly ✅");
+});
