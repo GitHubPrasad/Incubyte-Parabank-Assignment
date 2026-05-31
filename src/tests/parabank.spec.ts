@@ -84,4 +84,63 @@ test.describe("Parabank User Flows", () => {
 
     logger.info(`✅ Balance: ${balance} | Total: ${totalBalance}`);
   });
+
+  test("TC04 - Should show error when passwords do not match", async ({
+    page,
+  }) => {
+    const homePage = new HomePage(page);
+    const registerPage = new RegisterPage(page);
+    const testUser = TestDataHelper.generateUser();
+
+    await homePage.navigate();
+    await homePage.clickRegister();
+    await expect(page).toHaveURL(/register/);
+
+    // Fill form with mismatched passwords
+    await registerPage.fillRegistrationForm({
+      ...testUser,
+      confirmPassword: "DifferentPass@999",
+    });
+
+    await registerPage.submitRegistration();
+    await page.waitForLoadState("networkidle");
+
+    // Should show password mismatch error
+    const errorSpans = page.locator("span.error");
+    const errorCount = await errorSpans.count();
+    const errorText =
+      errorCount > 0 ? await errorSpans.first().innerText() : "";
+
+    logger.info(`TC04 - Password mismatch errors: ${errorCount}`);
+    logger.info(`TC04 - Error text: ${errorText}`);
+    console.log(`Password mismatch error: ${errorText}`);
+
+    expect(errorCount).toBeGreaterThan(0);
+    logger.info("TC04 - Password mismatch validation working ✅");
+  });
+
+  test("TC05 - Should show validation errors for empty registration form", async ({
+    page,
+  }) => {
+    const homePage = new HomePage(page);
+
+    await homePage.navigate();
+    await homePage.clickRegister();
+    await expect(page).toHaveURL(/register/);
+
+    // Click Register without filling anything
+    await page.getByRole("button", { name: "Register" }).click();
+    await page.waitForLoadState("networkidle");
+
+    // Should show validation errors
+    const errorSpans = page.locator("span.error");
+    const errorCount = await errorSpans.count();
+
+    logger.info(`TC05 - Validation errors shown: ${errorCount}`);
+    console.log(`Number of validation errors: ${errorCount}`);
+
+    // Should have multiple validation errors
+    expect(errorCount).toBeGreaterThan(0);
+    logger.info("TC05 - Empty form validation working correctly ✅");
+  });
 });

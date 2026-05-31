@@ -22,3 +22,13 @@ Feature: ParaBank User Account Management
     Then I should be redirected to the account overview page
     And the account balance should be displayed on the page
     And the balance amount should be logged to the console
+
+ Scenario: TC04 - Registration with mismatched passwords should show error
+    When I click on the Register link
+    And I fill the form with mismatched passwords
+    Then I should see a password mismatch error message
+
+  Scenario: TC05 - Registration with empty form should show validation errors
+    When I click on the Register link
+    And I click the Register button without filling the form
+    Then I should see validation error messages
